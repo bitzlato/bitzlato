@@ -1,4 +1,5 @@
 require "bitzlato/version"
+require "bitzlato/client"
 
 module Bitzlato
   class Error < StandardError; end

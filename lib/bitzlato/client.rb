@@ -2,6 +2,7 @@ require 'securerandom'
 require 'jwt'
 require 'json'
 require 'faraday'
+require 'bitzlato'
 
 module Bitzlato
   class Client
