@@ -8,13 +8,14 @@ module Bitzlato
   class Client
     WrongResponse = Class.new Error
 
-    def initialize(home_url: , key: , logger: false, email: nil, uid: nil)
+    def initialize(home_url: , key: , logger: false, email: nil, uid: nil, adapter: nil)
       raise ArgumentError, 'email or uid must be presented' if uid.nil? && email.nil?
       @email = email
       @uid = uid
       @jwk = JWT::JWK.import key
       @home_url = home_url
       @logger = logger
+      @adapter = adapter || Faraday.default_adapter
     end
 
     def get(path, params = {})
@@ -52,6 +53,7 @@ module Bitzlato
           'Accept' => 'application/json'
         }
         c.authorization :Bearer, bearer
+        c.adapter @adapter
       end
     end
 
