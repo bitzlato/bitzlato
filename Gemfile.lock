@@ -7,8 +7,8 @@ GIT
 PATH
   remote: .
   specs:
-    bitzlato (0.1.0)
-      faraday (>= 0.27)
+    bitzlato (0.1.2)
+      faraday (>= 0.17)
       json (~> 2.0)
       jwt (~> 2.3.0.dev)
 
