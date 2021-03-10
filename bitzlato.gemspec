@@ -6,8 +6,8 @@ Gem::Specification.new do |spec|
   spec.authors       = ["Danil Pismenny"]
   spec.email         = ["danil@brandymint.ru"]
 
-  spec.summary       = %q{Ruby HTTP API client for bitzlato.bz}
-  spec.description   = %q{Ruby HTTP API client to bitzlato.bz for wallets, trades and money}
+  spec.summary       = %q{Ruby HTTP API client library and cli for bitzlato.bz}
+  spec.description   = %q{Ruby HTTP API client library and cli to bitzlato.bz for wallets, trades and money}
   spec.homepage      = "https://github.com/dapi/bitzlato"
   spec.license       = "MIT"
   spec.required_ruby_version = Gem::Requirement.new(">= 2.3.0")
@@ -26,4 +26,9 @@ Gem::Specification.new do |spec|
   spec.bindir        = "exe"
   spec.executables   = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
   spec.require_paths = ["lib"]
+
+  spec.add_dependency 'faraday'
+  spec.add_dependency 'jwt'
+  spec.add_dependency 'json'
+  spec.add_development_dependency 'pry-nav'
 end
