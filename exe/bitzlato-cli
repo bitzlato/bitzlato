@@ -14,5 +14,7 @@ elsif ARGV.length == 2
 elsif ARGV.length == 3
   puts JSON.pretty_generate(client.send(ARGV[0], ARGV[1], JSON.parse(ARGV[2])))
 else
-  puts "Run example: #{$0} get /api/auth/whoami"
+  puts "bitzlato-cli v#{Bitzlato::VERSION}"
+  puts "Usage: bitzlato-cli [get/post] PATH [PARAMS]"
+  puts "Example: bitzlato-cli get /api/auth/whoami"
 end
