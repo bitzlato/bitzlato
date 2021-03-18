@@ -1,5 +1,7 @@
 #!/usr/bin/env ruby
 
+require 'rubygems'
+require 'bundler/setup'
 require 'bitzlato'
 
 key = JSON.parse(ENV.fetch('BITZLATO_API_KEY')).transform_keys(&:to_sym)
@@ -10,9 +12,9 @@ client = Bitzlato::Client
 if ARGV.length == 1
   puts JSON.pretty_generate(client.get ARGV[0] || '/api/auth/whoami')
 elsif ARGV.length == 2
-  puts JSON.pretty_generate(client.send(ARGV[0], ARGV[1]))
+  puts JSON.pretty_generate(client.send(ARGV[0].downcase, ARGV[1]))
 elsif ARGV.length == 3
-  puts JSON.pretty_generate(client.send(ARGV[0], ARGV[1], JSON.parse(ARGV[2])))
+  puts JSON.pretty_generate(client.send(ARGV[0].downcase, ARGV[1], JSON.parse(ARGV[2])))
 else
   puts "bitzlato-cli v#{Bitzlato::VERSION}"
   puts "Usage: bitzlato-cli [get/post] PATH [PARAMS]"
