@@ -6,6 +6,7 @@ require 'bitzlato'
 
 module Bitzlato
   class Client
+    class Error < StandardError; end
     WrongResponse = Class.new Error
 
     def initialize(home_url: , key: , logger: false, email: nil, uid: nil, adapter: nil)
@@ -14,8 +15,12 @@ module Bitzlato
       @uid = uid
       @jwk = JWT::JWK.import key
       @home_url = home_url
-      @logger = logger
       @adapter = adapter || Faraday.default_adapter
+      if logger == true
+        @logger = Faraday::Response::Logger.new(STDOUT)
+      else
+        @logger = logger
+      end
     end
 
     def get(path, params = {})
@@ -47,11 +52,12 @@ module Bitzlato
 
     def connection
       @connection ||= Faraday.new url: @home_url do |c|
-        c.use Faraday::Response::Logger if @logger
+        c.use Faraday::Response::Logger unless @logger.nil?
         c.headers = {
           'Content-Type' => 'application/json',
           'Accept' => 'application/json'
         }
+        c.request :curl, logger, :warn if ENV['BITZLATO_CURL_LOGGER']
         c.authorization :Bearer, bearer
         c.adapter @adapter
       end
