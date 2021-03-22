@@ -51,14 +51,15 @@ module Bitzlato
       }
     end
 
+    # Every time build new connection to have fresh jwt token
     def connection
-      @connection ||= Faraday.new url: @home_url do |c|
+      Faraday.new url: @home_url do |c|
         c.use Faraday::Response::Logger unless @logger.nil?
         c.headers = {
           'Content-Type' => 'application/json',
           'Accept' => 'application/json'
         }
-        c.request :curl, logger, :warn if ENV['BITZLATO_CURL_LOGGER']
+        c.request :curl, @logger, :warn if ENV['BITZLATO_CURL_LOGGER']
         c.authorization :Bearer, bearer
         c.adapter @adapter
       end
