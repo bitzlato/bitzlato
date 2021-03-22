@@ -35,7 +35,8 @@ module Bitzlato
 
     def parse_response(response)
       raise WrongResponse, "Wrong response status (#{response.status})" unless response.success?
-      raise WrongResponse, "Wrong content type (#{response['content-type']})" if !response.body.empty? && response['content-type'] != 'application/json'
+      return nil if response.body.emtpy?
+      raise WrongResponse, "Wrong content type (#{response['content-type']})" if response['content-type'] != 'application/json'
       JSON.parse response.body
     end
 
