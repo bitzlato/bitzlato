@@ -9,6 +9,8 @@ module Bitzlato
     class Error < StandardError; end
     WrongResponse = Class.new Error
 
+    attr_reader :uid, :email, :jwk, :home_url
+
     def initialize(home_url: , key: , logger: false, email: nil, uid: nil, adapter: nil)
       raise ArgumentError, 'email or uid must be presented' if uid.nil? && email.nil?
       @email = email
