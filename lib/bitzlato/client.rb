@@ -21,7 +21,7 @@ module Bitzlato
       if logger == true
         @logger = Faraday::Response::Logger.new(STDOUT)
       else
-        @logger = logger
+        @logger = logger.nil? || logger == false ? nil : logger
       end
     end
 
